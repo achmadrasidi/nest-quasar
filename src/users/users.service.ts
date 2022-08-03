@@ -56,6 +56,7 @@ export class UsersService {
 
   async create(param: CreateUserDto): Promise<any> {
     param.email = param.email.toLowerCase();
+    param.password = await this.hashPassword(param.password);
     const user = this.repository.create({ ...param });
     try {
       await this.repository.save(user);
